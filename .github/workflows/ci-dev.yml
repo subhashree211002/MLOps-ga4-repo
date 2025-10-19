@@ -1,0 +1,39 @@
+name: CI - Dev Branch
+
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Pull Data and Model from DVC
+        run: |
+          pip install dvc[gs]  # adjust if you use remote like s3 or gdrive
+          dvc pull
+
+      - name: Run Tests
+        run: pytest -v --maxfail=1 --disable-warnings
+
+      - name: Sanity Report via CML
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "## ✅ Pytest Results" > report.md
+          pytest --maxfail=1 --disable-warnings -q >> report.md
+          cml comment create report.md
