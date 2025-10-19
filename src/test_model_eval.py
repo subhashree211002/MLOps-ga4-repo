@@ -20,7 +20,7 @@ def test_model_evaluation(tmp_path):
     y = df["species"]
 
     y_pred = model.predict(X)
-    acc = accuracy_score(y_test, y)
+    acc = accuracy_score(y, y_pred)
     
     accuracy = evaluate_model(model)
     assert 0 <= accuracy <= 1
