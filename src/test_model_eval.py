@@ -19,8 +19,8 @@ def test_model_evaluation(tmp_path):
     X = df.drop("species", axis=1)
     y = df["species"]
 
-    y_pred = model.predict(X_test)
-    acc = accuracy_score(y_test, y_pred)
+    y_pred = model.predict(X)
+    acc = accuracy_score(y_test, y)
     
     accuracy = evaluate_model(model)
     assert 0 <= accuracy <= 1
