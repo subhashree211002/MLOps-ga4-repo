@@ -1,0 +1,38 @@
+name: CI - Main Branch
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Pull Data and Model from DVC
+        run: |
+          pip install dvc[gs]
+          dvc pull
+
+      - name: Run Tests
+        run: pytest -v --maxfail=1 --disable-warnings
+
+      - name: Post CI Summary
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "## 🧪 CI Report on Main" > report.md
+          pytest -q >> report.md
+          cml comment create report.md
