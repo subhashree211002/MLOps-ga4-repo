@@ -1,6 +1,8 @@
 import pytest
 from src.evaluate import evaluate_model
 from joblib import load
+import pandas as pd 
+from sklearn.metrics import accuracy_score
 
 def test_model_evaluation(tmp_path):
     # Assuming model.pkl & test data are fetched via DVC
