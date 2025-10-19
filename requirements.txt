@@ -1,1 +1,7 @@
-pytest\ndvc\ncml\nscikit-learn\npandas\nnumpy\njoblib
+pytest
+dvc
+cml
+scikit-learn
+pandas
+numpy
+joblib
