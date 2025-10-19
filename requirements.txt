@@ -1,0 +1,1 @@
+pytest\ndvc\ncml\nscikit-learn\npandas\nnumpy\njoblib
