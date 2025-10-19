@@ -21,16 +21,18 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -r requirements.txt
-          pip install dvc[gs]
-          sudo apt-get update && sudo apt-get install -y google-cloud-cli
-      
+          pip install dvc[gs] pytest cml
+
+      # ✅ Use official GCP auth action instead of manual install
       - name: Authenticate to Google Cloud
-        env:
-          GCP_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
-        run: |
-          echo "$GCP_SERVICE_ACCOUNT_KEY" > key.json
-          gcloud auth activate-service-account --key-file=key.json
-          gcloud config set project mlops-ga-474200
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
+      - name: Configure gcloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: mlops-ga-474200
       
       - name: Pull Data and Model from DVC
         run: dvc pull
