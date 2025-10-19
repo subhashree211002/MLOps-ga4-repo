@@ -19,13 +19,24 @@ jobs:
           python-version: "3.12"
 
       - name: Install Dependencies
-        run: pip install -r requirements.txt
-
-      - name: Pull Data and Model from DVC
         run: |
+          pip install -r requirements.txt
           pip install dvc[gs]
-          dvc pull
+          
+      # ✅ Use official GCP auth action instead of manual install
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
+      - name: Configure gcloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: mlops-ga-474200
+      
+      - name: Pull Data and Model from DVC
+        run: dvc pull
+        
       - name: Run Tests
         run: pytest -v --maxfail=1 --disable-warnings
 
