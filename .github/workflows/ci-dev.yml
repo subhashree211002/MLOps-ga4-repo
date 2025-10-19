@@ -21,8 +21,8 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -r requirements.txt
-          pip install dvc[gs] pytest cml
-
+          pip install dvc[gs]
+          
       # ✅ Use official GCP auth action instead of manual install
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
