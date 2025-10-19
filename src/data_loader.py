@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-def load_data(data_path: str = f"../data/data.csv"):
+def load_data(data_path: str = f"/home/subhashreemanogaran/MLOps-ga4-repo/data/data.csv"):
     """
     Load the Iris dataset from CSV and split into train/test.
     """
