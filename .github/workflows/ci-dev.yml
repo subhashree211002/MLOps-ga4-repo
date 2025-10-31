@@ -20,8 +20,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install -r requirements.txt
-          pip install dvc[gs]
+          pip install pytest dvc[gs] scikit-learn pandas
           pip install cml
           
       # ✅ Use official GCP auth action instead of manual install
