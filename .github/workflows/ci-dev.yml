@@ -22,6 +22,7 @@ jobs:
         run: |
           pip install -r requirements.txt
           pip install dvc[gs]
+          pip install cml
           
       # ✅ Use official GCP auth action instead of manual install
       - name: Authenticate to Google Cloud
