@@ -5,7 +5,11 @@ on:
     branches: [ "dev" ]
   pull_request:
     branches: [ "dev" ]
-
+    
+permissions:
+  contents: write
+  pull-requests: write
+  
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -20,8 +24,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install pytest dvc[gs] scikit-learn pandas
-          pip install cml
+          pip install -r requirements.txt
+          pip install dvc[gs]
           
       # ✅ Use official GCP auth action instead of manual install
       - name: Authenticate to Google Cloud
