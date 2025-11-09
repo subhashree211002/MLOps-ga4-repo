@@ -14,10 +14,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Show public IP
+        run: curl -s https://api.ipify.org
 
-      - name: Test MLflow connectivity
-        run: curl -I http://34.55.166.173:8100/
-        
       - name: Checkout Repository
         uses: actions/checkout@v4
 
